@@ -1,0 +1,131 @@
+#
+#! \file    ./Maintfile
+#! \author  Jiří Kučera, <jkucera AT redhat.com>
+#! \stamp   2018-06-08 12:43:48 (UTC+01:00, DST+01:00)
+#! \project python-pylint-plugin-utils maintenance tools
+#! \license MIT (see ./LICENSE)
+#! \version See ./VERSION
+#! \fdesc   Project maintenance script.
+#
+
+# Project variables:
+setvar PROJECT 'python-pylint-plugin-utils maintenance tools'
+setvar AUTHOR_NAME 'Jiří Kučera'
+setvar AUTHOR_EMAIL 'jkucera AT redhat.com'
+setvar LICENSE 'MIT'
+setvar VERSION '0.0.0'
+
+setvar PKG_NAME 'python-pylint-plugin-utils'
+setvar PKG_VERSION '0.2.6'
+setvar UPSTREAM_REPO "https://github.com/PyCQA/pylint-plugin-utils.git"
+
+# Project files:
+addfile license : LICENSE
+addfile version : VERSION
+addfile : .gitignore README.md
+addfile sources : Maintfile
+# - initial package's files:
+addfile inipkg : specfiles/${ProjectVars[PKG_NAME]}-init/${ProjectVars[PKG_NAME]}.spec
+addfile inipkg : specfiles/${ProjectVars[PKG_NAME]}-init/${ProjectVars[PKG_NAME]}-use_setuptools.patch
+
+###############################################################################
+# Project maintaining tasks (targets)
+###############################################################################
+
+##
+# Print usage as default.
+tg_default() {
+  echo 'Maintfile targets:'
+  echo ''
+  echo '  get_repos'
+  echo '    get upstream, downstream and package repos'
+  echo '  inipkg [RELEASES]'
+  echo '    make an initial package (suitable for review requests)'
+  echo '  missing'
+  echo '    add missing files to the project root (LICENSE, README.md, and'
+  echo '    VERSION) and update headers of source files (\project, \license,'
+  echo '    and \version)'
+  echo '  srpm'
+  echo '    make source rpm from specfile; usage:'
+  echo '      srpm --init'
+  echo '        initialize temporary workplace; a path to temporary workplace'
+  echo '        is "$TMP_WORKPLACE/srpm/$PKG_NAME"; if TMP_WORKPLACE is not'
+  echo '        set, its default value is ".pk-maint/tmp"'
+  echo '      srpm --show WHAT'
+  echo '        show the value of WHAT, where WHAT can be:'
+  echo '        - srcdir - show the path to the directory with specfile'
+  echo '        - destdir - show the path to the directory with the made srpms'
+  echo '        - workdir - show the path to the workplace'
+  echo '      srpm --copyin PATH'
+  echo '        copy PATH into the workplace and start track it'
+  echo '      srpm --copyout PATH'
+  echo '        copy file to PATH; the name of the file is the last element of'
+  echo '        PATH'
+  echo '      srpm --commit'
+  echo '        commit the tracked files to the internal git repo'
+  echo '      srpm --get-sources'
+  echo '        download sources listed in specfile'
+  echo '      srpm --srpm [RELEASE]'
+  echo '        make source RPM for RELEASE; if RELEASE is omitted, "master"'
+  echo '        is used'
+  echo '      srpm --clean'
+  echo '        remove untracked files from the workplace'
+  echo '      srpm --done'
+  echo '        finish work, cleanup the workplace'
+  echo ''
+}
+
+##
+# missing
+#
+# Add missing files to the project root (LICENSE, README.md, and VERSION) and
+# update headers of source files (\project, \license, and \version).
+target missing
+
+##
+# get_repos
+#
+# Get upstream, downstream and package repos.
+target get_repos
+
+##
+# srpm $1 $2 ... $n
+#
+#   $1              - command
+#   $2, $3, ..., $n - command options
+#
+# Make source rpm from specfile. Usage:
+#
+#   srpm --init
+#     Initialize temporary workplace. A path to temporary workplace is
+#     "${TMP_WORKPLACE}/srpm/$PKG_NAME". If TMP_WORKPLACE is not set, its
+#     default value is '.pk-maint/tmp'.
+#   srpm --show WHAT
+#     Show the value of WHAT, where WHAT can be:
+#     - srcdir - show the path to the directory with specfile;
+#     - destdir - show the path to the directory with the made srpms;
+#     - workdir - show the path to the workplace.
+#   srpm --copyin PATH
+#     Copy PATH into the workplace and start track it.
+#   srpm --copyout PATH
+#     Copy file to PATH. The name of the file is the last element of PATH.
+#   srpm --commit
+#     Commit the tracked files to the internal git repo.
+#   srpm --get-sources
+#     Download sources listed in specfile.
+#   srpm --srpm [RELEASE]
+#     Make source RPM for RELEASE. If RELEASE is omitted, `master' is used.
+#   srpm --clean
+#     Remove untracked files from the workplace.
+#   srpm --done
+#     Finish work, cleanup the workplace.
+#
+target srpm
+
+#
+# inipkg $1 $2 ... $n
+#
+#   $1, $2, ..., $n - list of releases
+#
+# Make an initial package (suitable for review requests).
+target inipkg
