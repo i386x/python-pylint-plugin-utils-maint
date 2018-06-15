@@ -68,6 +68,8 @@ tg_default() {
   echo '      srpm --srpm [RELEASE]'
   echo '        make source RPM for RELEASE; if RELEASE is omitted, "master"'
   echo '        is used'
+  echo '      srpm --lint'
+  echo '        run rpmlint, save results to the common logfile'
   echo '      srpm --clean'
   echo '        remove untracked files from the workplace'
   echo '      srpm --done'
@@ -115,6 +117,8 @@ target get_repos
 #     Download sources listed in specfile.
 #   srpm --srpm [RELEASE]
 #     Make source RPM for RELEASE. If RELEASE is omitted, `master' is used.
+#   srpm --lint
+#     Run rpmlint, save results to the common logfile.
 #   srpm --clean
 #     Remove untracked files from the workplace.
 #   srpm --done
