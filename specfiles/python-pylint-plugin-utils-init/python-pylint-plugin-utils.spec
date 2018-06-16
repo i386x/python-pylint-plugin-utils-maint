@@ -1,5 +1,5 @@
 # Define `python2_sitelib' if there is no one:
-%{!?python2_sitelib: %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%{!?python2_sitelib:%global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 # Enable Python 3 builds for Fedora and RHEL > 7:
 %if 0%{?fedora} || 0%{?rhel} > 7
 # Add `--without python3' option (enable python3 by default):
@@ -7,7 +7,7 @@
 # Define `python3_pkgversion' if there is no one:
 %{!?python3_pkgversion:%global python3_pkgversion 3}
 # Define `python3_sitelib' if there is no one:
-%{!?python3_sitelib: %global python3_sitelib %(%{__python3} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
+%{!?python3_sitelib:%global python3_sitelib %(%{__python3} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %else
 # Add `--with python3' option (disable python3 by default):
 %bcond_with python3
@@ -45,16 +45,16 @@ BuildArch:      noarch
 #
 #   -V <version>  Python version.
 #
-%global pypkgdeps(V:) %{expand:
-BuildRequires:  python%{-V:%{-V*}}%{!-V:2}-devel
-BuildRequires:  python%{-V:%{-V*}}%{!-V:2}-setuptools
-BuildRequires:  python%{-V:%{-V*}}%{!-V:2}-pylint
-BuildRequires:  python%{-V:%{-V*}}%{!-V:2}-astroid
-
-# - imported by `pylint_plugin_utils/__init__.py`
-Requires:       python%{-V:%{-V*}}%{!-V:2}-pylint
-# - noted in `setup.py`
-Requires:       python%{-V:%{-V*}}%{!-V:2}-astroid
+%global pypkgdeps(V:) %%{expand:\
+BuildRequires:  python%%{-V:%%{-V*}}%%{!-V:2}-devel\
+BuildRequires:  python%%{-V:%%{-V*}}%%{!-V:2}-setuptools\
+BuildRequires:  python%%{-V:%%{-V*}}%%{!-V:2}-pylint\
+BuildRequires:  python%%{-V:%%{-V*}}%%{!-V:2}-astroid\
+\
+# - imported by `pylint_plugin_utils/__init__.py`\
+Requires:       python%%{-V:%%{-V*}}%%{!-V:2}-pylint\
+# - noted in `setup.py`\
+Requires:       python%%{-V:%%{-V*}}%%{!-V:2}-astroid\
 }
 
 
