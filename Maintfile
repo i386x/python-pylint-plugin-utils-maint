@@ -27,6 +27,7 @@ addfile sources : Maintfile
 # - initial package's files:
 addfile inipkg : specfiles/${ProjectVars[PKG_NAME]}-init/${ProjectVars[PKG_NAME]}.spec
 addfile inipkg : specfiles/${ProjectVars[PKG_NAME]}-init/${ProjectVars[PKG_NAME]}-use_setuptools.patch
+addfile inipkg : specfiles/${ProjectVars[PKG_NAME]}-init/${ProjectVars[PKG_NAME]}-do_not_depend_on_astroid.patch
 
 ###############################################################################
 # Project maintaining tasks (targets)
